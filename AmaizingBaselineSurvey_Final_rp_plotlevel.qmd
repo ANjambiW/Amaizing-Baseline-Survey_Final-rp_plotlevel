@@ -1,0 +1,391 @@
+---
+title: "Amaizing  Baseline Survey_Final-rp_plotlevel"
+author: "Njambi"
+format: html
+editor: visual
+---
+
+## 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Clear the environment
+
+```{r}
+
+rm(list = ls())
+
+```
+
+## Loading necessary libraries
+
+```{r, include=FALSE}
+
+library(tidyverse) # includes the dplyr, ggplot2, tidyr, readr, stringr, forcats, tibble packages
+library(readxl)
+library(Hmisc)
+library(labelled)
+library(magrittr)
+library(datawizard)
+library(gtsummary)
+library(gt)
+library(kableExtra)
+library(flextable)
+library(splitstackshape)
+library(lubridate)
+library(foreign)
+library(haven)
+
+
+```
+
+## Set the working directory
+
+```{r}
+# Set working directory
+
+setwd("C:\\Users\\awanjau\\OneDrive - CGIAR\\Alliance\\Alliance_2024\\AMAZING\\AmazingBaselineDataCleaning\\Amaizing  Baseline Survey_Final-rp_plotlevel")
+      
+```
+
+## Loading data
+
+```{r}
+# Read a csv file
+
+aMaizingBL_plot_level_path <- "C:\\Users\\awanjau\\OneDrive - CGIAR\\Alliance\\Alliance_2024\\AMAZING\\aMaizingBaseline_Files\\Amaizing  Baseline Survey_Final-rp_plotlevel.csv"
+
+aMaizingBL_plot_level <- read_csv(aMaizingBL_plot_level_path)
+
+head(aMaizingBL_plot_level)
+```
+
+```{r}
+# Check number of rows and columns in data
+
+dim(aMaizingBL_plot_level)
+
+# Print column names
+
+names(aMaizingBL_plot_level)
+```
+
+```{r}
+class(aMaizingBL_plot_level$mplot_index)
+
+sort(unique(aMaizingBL_plot_level$mplot_index), na.last = TRUE)
+```
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+    mplot_index = as.integer(mplot_index)
+  )
+
+class(aMaizingBL_plot_level$mplot_index)
+```
+
+```{r}
+class(aMaizingBL_plot_level$mplotindexed)
+
+sort(unique(aMaizingBL_plot_level$mplotindexed), na.last = TRUE)
+```
+
+```{r}
+class(aMaizingBL_plot_level$mplot_index1)
+
+sort(unique(aMaizingBL_plot_level$mplot_index1), na.last = TRUE)
+```
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+    mplot_index1 = as.integer(mplot_index1)
+  )
+
+class(aMaizingBL_plot_level$mplot_index1)
+```
+
+```{r}
+class(aMaizingBL_plot_level$m_plotid)
+
+#sort(unique(aMaizingBL_plot_level$m_plotid), na.last = TRUE)
+```
+
+```{r}
+class(aMaizingBL_plot_level$f2)
+
+sort(unique(aMaizingBL_plot_level$f2), na.last = TRUE)
+```
+
+```{r}
+class(aMaizingBL_plot_level$f3)
+
+sort(unique(aMaizingBL_plot_level$f3), na.last = TRUE)
+```
+
+1 Yes 0 No
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+    f3 = factor(
+      f3, 
+      levels = c(0, 1), 
+      labels = c("No", "Yes")
+    )
+  
+  ) 
+
+class(aMaizingBL_plot_level$f3)
+
+unique(aMaizingBL_plot_level$f3)
+```
+
+```{r}
+class(aMaizingBL_plot_level$f5)
+
+sort(unique(aMaizingBL_plot_level$f5), na.last = TRUE)
+```
+
+1 Improved Variety 2 Local Variety
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+    f5 = factor(
+      f5, 
+      levels = c(1,2), 
+      labels = c("Improved Variety", "Local Variety")
+    )
+  
+  ) 
+
+class(aMaizingBL_plot_level$f5)
+
+unique(aMaizingBL_plot_level$f5)
+```
+
+```{r}
+class(aMaizingBL_plot_level$f6)
+
+sort(unique(aMaizingBL_plot_level$f6), na.last = TRUE)
+```
+
+```{r}
+class(aMaizingBL_plot_level$f6_unit)
+
+sort(unique(aMaizingBL_plot_level$f6_unit), na.last = TRUE)
+```
+
+1 Kgs 2 Bucket 3 90 kg Bag 4 50 Kg Bag -222 Other Specify
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+    f6_unit = factor(
+      f6_unit, 
+      levels = c(1, 2, 3, 4, -222), 
+      labels = c("Kgs", "Bucket", "90 kg Bag", "50 Kg Bag", "Other Specify")
+    )
+  
+  ) 
+
+class(aMaizingBL_plot_level$f6_unit)
+
+unique(aMaizingBL_plot_level$f6_unit)
+```
+
+```{r}
+
+class(aMaizingBL_plot_level$f6_unit_sp)
+
+sort(unique(aMaizingBL_plot_level$f6_unit_sp), na.last = TRUE)
+```
+
+This column is blank; drop it.
+
+```{r}
+
+class(aMaizingBL_plot_level$f21)
+
+sort(unique(aMaizingBL_plot_level$f21), na.last = TRUE)
+```
+
+```{r}
+
+class(aMaizingBL_plot_level$f22)
+
+sort(unique(aMaizingBL_plot_level$f22), na.last = TRUE)
+```
+
+1 90 Kg bag 2 70Kg bag 3 50Kg bag 4 25Kg bag 5 10Kg bag 6 Gorogoro (2kgs ***7 20Kg Tin*** ***8 20Kg Tin*** 9 Wheelbarrow 10 A cart 11 Kilograms -222 Other, Specify
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+    f22 = factor(
+      f22, 
+      levels = c(1:9, 11, -222), 
+      labels = c("90Kg bag",	"70Kg bag",	"50Kg bag",	"25Kg bag",	"10Kg bag",	"Gorogoro (2kgs)",	"20Kg Tin",	"20Kg Tin", "Wheelbarrow", 	"Kilograms",	"Other, Specify"
+)
+    )
+  
+  ) 
+
+class(aMaizingBL_plot_level$f22)
+
+unique(aMaizingBL_plot_level$f22)
+```
+
+```{r}
+
+class(aMaizingBL_plot_level$f22_sp)
+
+unique(aMaizingBL_plot_level$f22_sp)
+```
+
+```{r}
+
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  
+  mutate(
+    f22_sp = case_when(
+      f22_sp %in% c("40 kg", "40kg sack", "40kg bag") ~ "40Kg bag",
+      f22_sp == "105 kg bag" ~ "105Kg bag",
+      f22_sp == "60kg bag" ~ "60Kg bag",
+      f22_sp == "100kg bag" ~ "100Kg bag",
+      f22_sp == "Debes" ~ "Debe",
+      f22_sp == "Buckets" ~ "Bucket",
+      f22_sp == "Lorries" ~ "Lorry" ,
+      
+      TRUE ~ f22_sp
+    )
+  )
+
+class(aMaizingBL_plot_level$f22_sp)
+
+unique(aMaizingBL_plot_level$f22_sp)
+```
+
+Drop f22_sp after replacing in f22.
+
+```{r}
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  mutate(
+
+    f22 = as.character(f22),
+    f22 = str_replace_all(f22, "Other, Specify",
+                                              replacement = f22_sp),
+    f22 = factor(f22)
+  )
+
+class(aMaizingBL_plot_level$f22)
+
+unique(aMaizingBL_plot_level$f22)
+```
+
+```{r}
+
+column_labels <- c(
+  
+mplot_index = "mplot_index", #
+mplotindexed = "mplotindexed", #
+mplot_index1 = "Plot (value) selected",
+m_plotid = "Name of plot selected (level/category selected), corresponding to mplot_index1 value",
+f2 = "Proportion of cname (crop name) under the m_plotid  (%)",
+f3 = "Was cname intercropped with another crop in m_plotid? ",
+f5 = "Was cname grown in m_plotid   improved or local?",
+f6 = "Quantity of Seed used for cname in  m_plotid?",
+f6_unit = "Select the Unit of Seed",
+#f6_unit_sp = "Please specify the Unit",
+f21 = "Quantity of cname harvested in m_plotid?",
+f22 = "Unit",
+#f22_sp = "Please specify the Unit",
+PARENT_KEY = "Parent key",
+KEY = "Key",
+`SET-OF-rp_plotlevel` = "Input at Plot Level repeat group ID"
+
+)
+
+```
+
+```{r}
+
+# Rename columns with characters not supported by stata
+
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  
+  rename(SET_OF_rp_plotlevel = `SET-OF-rp_plotlevel`
+    
+         )
+
+```
+
+```{r}
+
+aMaizingBL_plot_level <- aMaizingBL_plot_level %>%
+  select(-c(10, 13)) %>%
+  set_variable_labels(.labels = column_labels)
+```
+
+Using the function View() to open the new data in a spreadsheet reveals the column names and labels.
+
+```{r}
+
+#View(aMaizingBL_plot_level)
+
+```
+
+## Generate a data dictionary
+
+```{r}
+# Data dictionary
+
+aMaizingBL_plot_level_dict <- look_for(aMaizingBL_plot_level, labels = TRUE, values = TRUE) %>%
+  dplyr::select(-c(missing, value_labels))
+
+  gt(aMaizingBL_plot_level_dict)
+
+```
+
+## Export data dictionary to CSV
+
+```{r}
+
+readr::write_csv(aMaizingBL_plot_level_dict, "aMaizingBL_plot_level_dict.csv")
+
+```
+
+## Export data to CSV
+
+```{r}
+
+readr::write_csv(aMaizingBL_plot_level, "aMaizingBL_plot_level.csv")
+
+```
+
+## Save as R data
+
+```{r}
+
+save(aMaizingBL_plot_level, file = "aMaizingBL_plot_level.RData")
+```
+
+## Export data to SPSS
+
+```{r}
+
+write.foreign(aMaizingBL_plot_level, "aMaizingBL_plot_level.sav", "aMaizingBL_plot_level", package = "SPSS")
+
+```
+
+## Export data to STATA
+
+```{r}
+
+write_dta(aMaizingBL_plot_level, "aMaizingBL_plot_level.dta")
+
+```
